@@ -1,9 +1,7 @@
 public abstract class Creature extends Entity {
 
-    int speed;
-    int hp;
+    public int speed;
+    public int hp;
 
-    void makeMove() {
-
-    }
+    public abstract void makeMove(WorldMap worldMap);
 }

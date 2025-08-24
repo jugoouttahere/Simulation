@@ -1,16 +1,39 @@
+import java.util.List;
+
 public class Simulation {
 
-    Map map = new Map();
-    Renderer renderer = new Renderer();
-    int turnCount;
+    private WorldMap worldMap = new WorldMap(5,5);
+    private Renderer renderer = new Renderer();
+    private List<Action> init;
+    private List<Action> turn;
+    private int turnCount;
 
-    void start() {
-        while (true) {
-
+    public Simulation() {
+        for (Action action : init) {
+            action.execute(worldMap);
         }
     }
 
-    void pause() {
+    private void start() {
 
+        while (true) {
+            nextTurn();
+
+        }
+
+    }
+
+    private void pause() {
+
+    }
+
+    private void nextTurn() {
+
+        for (Action action : turn) {
+            action.execute(worldMap);
+        }
+
+        renderer.render(worldMap);
+        turnCount++;
     }
 }
