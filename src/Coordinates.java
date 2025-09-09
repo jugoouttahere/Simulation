@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Coordinates {
     public int row;
     public int col;
@@ -8,15 +10,23 @@ public class Coordinates {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || this.getClass() != obj.getClass()) return false;
-        Coordinates that = (Coordinates) obj;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordinates that = (Coordinates) o;
         return row == that.row && col == that.col;
     }
 
     @Override
     public int hashCode() {
-        return 31 * row + col;
+        return Objects.hash(row, col);
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 }

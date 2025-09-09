@@ -1,3 +1,3 @@
 public interface Action {
-    void execute(WorldMap worldMap);
+    void execute(Board board);
 }

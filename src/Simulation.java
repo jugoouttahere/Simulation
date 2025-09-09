@@ -1,26 +1,22 @@
 import java.util.List;
 
 public class Simulation {
-
-    private WorldMap worldMap = new WorldMap(5,5);
+    private Board board = new Board();
     private Renderer renderer = new Renderer();
-    private List<Action> init;
-    private List<Action> turn;
+    private List<Action> initActions;
+    private List<Action> turnActions;
     private int turnCount;
 
     public Simulation() {
-        for (Action action : init) {
-            action.execute(worldMap);
+        for (Action action : initActions) {
+            action.execute(board);
         }
     }
 
     private void start() {
-
         while (true) {
             nextTurn();
-
         }
-
     }
 
     private void pause() {
@@ -28,12 +24,10 @@ public class Simulation {
     }
 
     private void nextTurn() {
-
-        for (Action action : turn) {
-            action.execute(worldMap);
+        for (Action action : turnActions) {
+            action.execute(board);
         }
-
-        renderer.render(worldMap);
+        renderer.render(board);
         turnCount++;
     }
 }

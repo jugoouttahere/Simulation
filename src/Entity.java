@@ -1,4 +1,12 @@
 public abstract class Entity {
-    public int row;
-    public int col;
+    public Coordinates coordinates;
+
+    public Entity(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
 }
