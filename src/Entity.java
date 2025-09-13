@@ -5,8 +5,4 @@ public abstract class Entity {
         this.coordinates = coordinates;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
 }

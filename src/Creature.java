@@ -17,4 +17,7 @@ public abstract class Creature extends Entity {
     }
 
     public abstract void makeMove();
+
+    public abstract boolean isValidMove(Board board, Coordinates coordinates);
+
 }

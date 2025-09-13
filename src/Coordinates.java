@@ -1,8 +1,8 @@
 import java.util.Objects;
 
 public class Coordinates {
-    public int row;
-    public int col;
+    private final int row;
+    private final int col;
 
     public Coordinates(int row, int col) {
         this.row = row;
@@ -28,5 +28,10 @@ public class Coordinates {
 
     public int getCol() {
         return col;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Высота = %d, Ширина = %d", row, col);
     }
 }
