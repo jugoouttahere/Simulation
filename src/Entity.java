@@ -1,4 +1,8 @@
 public abstract class Entity {
-    int x;
-    int y;
+    public Coordinates coordinates;
+
+    public Entity(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
 }
