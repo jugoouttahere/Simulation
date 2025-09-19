@@ -18,33 +18,33 @@ public class PopulateBoard implements Action {
     @Override
     public void execute(Board board) {
         for (int i = 0; i < countHerbivores; i++) {
-            Coordinates emptyCoordinates = getRandomEmpty(board);
+            Coordinates emptyCoordinates = getRandomEmptyCoord(board);
             board.putEntity(new Herbivore(1, 10, emptyCoordinates), emptyCoordinates);
         }
 
         for (int i = 0; i < countPredators; i++) {
-            Coordinates emptyCoordinates = getRandomEmpty(board);
+            Coordinates emptyCoordinates = getRandomEmptyCoord(board);
             board.putEntity(new Predator(1, 20, 5, emptyCoordinates), emptyCoordinates);
         }
 
         for (int i = 0; i < countGrass; i++) {
-            Coordinates emptyCoordinates = getRandomEmpty(board);
+            Coordinates emptyCoordinates = getRandomEmptyCoord(board);
             board.putEntity(new Grass(emptyCoordinates), emptyCoordinates);
         }
 
         for (int i = 0; i < countTrees; i++) {
-            Coordinates emptyCoordinates = getRandomEmpty(board);
+            Coordinates emptyCoordinates = getRandomEmptyCoord(board);
             board.putEntity(new Tree(emptyCoordinates), emptyCoordinates);
         }
 
         for (int i = 0; i < countRocks; i++) {
-            Coordinates emptyCoordinates = getRandomEmpty(board);
+            Coordinates emptyCoordinates = getRandomEmptyCoord(board);
             board.putEntity(new Rock(emptyCoordinates), emptyCoordinates);
         }
 
     }
 
-    private Coordinates getRandomEmpty(Board board) {
+    private Coordinates getRandomEmptyCoord(Board board) {
         Random random = new Random();
         Coordinates randCoordinate;
 

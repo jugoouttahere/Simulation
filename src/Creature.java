@@ -1,6 +1,6 @@
 public abstract class Creature extends Entity {
-    private final int speed;
-    private final int hp;
+    private int speed;
+    private int hp;
 
     public Creature(int speed, int hp, Coordinates coordinates) {
         super(coordinates);
@@ -16,7 +16,23 @@ public abstract class Creature extends Entity {
         return hp;
     }
 
-    public abstract void makeMove();
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public boolean isAlive() {
+        return this.hp > 0;
+    }
+
+    public void takeDamage(int damage) {
+        this.hp -= damage;
+    }
+
+    public abstract void makeMove(Board board);
 
     public abstract boolean isValidMove(Board board, Coordinates coordinates);
 

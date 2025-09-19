@@ -16,7 +16,7 @@ public class BFS {
         visited.add(current);
     }
 
-    public Coordinates findTargetBFS(Board board, Coordinates current, Coordinates target) {
+    public Coordinates findTargetBFS(Coordinates current, Coordinates target) {
         addToQueue(current);
         setVisited(current);
 
