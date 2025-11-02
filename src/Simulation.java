@@ -2,32 +2,30 @@ import java.util.List;
 
 public class Simulation {
     private Board board = new Board();
-    private Renderer renderer = new Renderer();
-    private List<Action> initActions;
-    private List<Action> turnActions;
+    private Renderer renderer = new Renderer(board);
+    private WorldGenerator worldGenerator = new WorldGenerator(board);
+    private MoveCreatures moveCreatures = new MoveCreatures(board);
     private int turnCount;
 
     public Simulation() {
-        for (Action action : initActions) {
-            action.execute(board);
-        }
+        worldGenerator.execute(board);
     }
 
-    private void start() {
+    public void start() throws InterruptedException {
         while (true) {
             nextTurn();
+            Thread.sleep(500);
         }
     }
 
-    private void pause() {
+    public void pause() {
 
     }
 
-    private void nextTurn() {
-        for (Action action : turnActions) {
-            action.execute(board);
-        }
-        renderer.render(board);
+    public void nextTurn() {
+        moveCreatures.execute(board);
+        renderer.render();
+        System.out.println();
         turnCount++;
     }
 }
