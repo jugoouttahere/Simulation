@@ -2,10 +2,14 @@ public abstract class Creature extends Entity {
     private int speed;
     private int hp;
 
-    public Creature(int speed, int hp, Coordinates coordinates) {
+    public Creature(Coordinates coordinates, int speed, int hp) {
         super(coordinates);
         this.speed = speed;
         this.hp = hp;
+    }
+
+    public Creature(int row, int col, int speed, int hp) {
+        this(new Coordinates(row, col), speed, hp);
     }
 
     public int getSpeed() {
@@ -32,8 +36,9 @@ public abstract class Creature extends Entity {
         this.hp -= damage;
     }
 
-    public abstract void makeMove(Board board);
-
-    public abstract boolean isValidMove(Board board, Coordinates coordinates);
-
+    public void move(Coordinates newCoordinates, Board board) {
+        board.getBoard().remove(this.getCoordinates());
+        this.setCoordinates(newCoordinates);
+        board.getBoard().put(newCoordinates, this);
+    }
 }

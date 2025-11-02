@@ -9,6 +9,14 @@ public class Coordinates {
         this.col = col;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -20,18 +28,5 @@ public class Coordinates {
     @Override
     public int hashCode() {
         return Objects.hash(row, col);
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Высота = %d, Ширина = %d", row, col);
     }
 }

@@ -19,12 +19,12 @@ public class PopulateBoard implements Action {
     public void execute(Board board) {
         for (int i = 0; i < countHerbivores; i++) {
             Coordinates emptyCoordinates = getRandomEmptyCoord(board);
-            board.putEntity(new Herbivore(1, 10, emptyCoordinates), emptyCoordinates);
+            board.putEntity(new Herbivore(emptyCoordinates,1, 10), emptyCoordinates);
         }
 
         for (int i = 0; i < countPredators; i++) {
             Coordinates emptyCoordinates = getRandomEmptyCoord(board);
-            board.putEntity(new Predator(1, 20, 5, emptyCoordinates), emptyCoordinates);
+            board.putEntity(new Predator(emptyCoordinates,1, 20, 5), emptyCoordinates);
         }
 
         for (int i = 0; i < countGrass; i++) {
@@ -50,7 +50,7 @@ public class PopulateBoard implements Action {
 
         do {
             randCoordinate = new Coordinates(
-                    random.nextInt(Board.MAX_ROWS), random.nextInt(Board.MAX_COLS));
+                    random.nextInt(board.MAX_ROWS), random.nextInt(board.MAX_COLS));
         } while (!board.isCellEmpty(randCoordinate));
 
         return randCoordinate;

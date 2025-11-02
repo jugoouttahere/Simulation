@@ -1,4 +1,5 @@
 public class Renderer {
+    private final Board board;
 
     private static final String EMPTY_CELL_SPRITE = "\u2B1B";
     private static final String HERBIVORE_SPRITE = "\uD83D\uDC07";
@@ -7,22 +8,26 @@ public class Renderer {
     private static final String TREE_SPRITE = "\uD83C\uDF32";
     private static final String ROCK_SPRITE = "\uD83E\uDEA8";
 
-    public void render(Board board) {
-        for (int row = 10; row > 0; row--) {
+    public Renderer(Board board) {
+        this.board = board;
+    }
+
+    public void render() {
+        for (int row = board.MAX_ROWS - 1; row >= 0; row--) {
             StringBuilder line = new StringBuilder();
-            for (int col = 0; col < 10; col++) {
+            for (int col = 0; col < board.MAX_COLS - 1; col++) {
                 Coordinates coordinates = new Coordinates(row, col);
                 if (board.isCellEmpty(coordinates)) {
                     line.append(EMPTY_CELL_SPRITE);
                 } else {
-                    line.append(getSprite(board, coordinates));
+                    line.append(getSprite(coordinates));
                 }
             }
             System.out.println(line);
         }
     }
 
-    private String getSprite(Board board, Coordinates coordinates) {
+    private String getSprite(Coordinates coordinates) {
         Entity entity = board.getEntity(coordinates);
         switch (entity.getClass().getSimpleName()) {
             case "Herbivore":
