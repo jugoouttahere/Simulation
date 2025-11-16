@@ -9,10 +9,6 @@ public class Board {
 
     private Map<Coordinates, Entity> board = new HashMap<>();
 
-    public Map<Coordinates, Entity> getBoard() {
-        return board;
-    }
-
     public Entity getEntity(Coordinates coordinates) {
         return board.get(coordinates);
     }
@@ -24,14 +20,13 @@ public class Board {
         }
     }
 
+    public void put(Coordinates coordinates, Entity entity) {
+        board.put(coordinates, entity);
+    }
+
     public void removeEntity(Coordinates coordinates) {
         board.remove(coordinates);
     }
-
-//    public void moveEntity(Entity entity, Coordinates newCoord) {
-//        removeEntity(entity.getCoordinates());
-//        putEntity(entity, newCoord);
-//    }
 
     public List<Entity> getEntities() {
         return board.values().stream().toList();

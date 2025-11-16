@@ -1,6 +1,4 @@
-import java.util.List;
-
-public class MoveCreatures implements Action {
+public class MoveCreatures implements Actionable {
     private Board board;
     private BFS bfs;
 
@@ -12,42 +10,60 @@ public class MoveCreatures implements Action {
     @Override
     public void execute(Board board) {
         for (Creature creature : board.getCreatures()) {
-            List<Coordinates> path = bfs.findPath(creature.getCoordinates(), findNearestTarget(creature.getCoordinates()));
 
-            creature.move(path.get(1), board);
+            Class<? extends Entity> targetEntity;
+            if (creature instanceof Herbivore) {
+                targetEntity = Grass.class;
+            } else if (creature instanceof Predator) {
+                targetEntity = Herbivore.class;
+            } else {
+                continue;
+            }
+
+            Coordinates nextStep = bfs.findNextStep(creature.getCoordinates(), targetEntity);
+            if (nextStep != null) {
+                creature.move(nextStep, board);
+            }
         }
     }
 
-    private Coordinates findNearestTarget(Coordinates creaturePos) {
+    private Coordinates findTarget(Coordinates creaturePos) {
+        Entity creature = board.getEntity(creaturePos);
+
+        if (creature instanceof Herbivore) {
+            return findNearest(creaturePos, Grass.class);
+        }
+
+        if (creature instanceof Predator) {
+            return findNearest(creaturePos, Herbivore.class);
+        }
+
+        return null;
+    }
+
+    private Coordinates findNearest(Coordinates from, Class<? extends Entity> target) {
         Coordinates nearest = null;
         int bestDistance = Integer.MAX_VALUE;
 
-        if (board.getEntity(creaturePos) instanceof Herbivore) {
-            for (Entity entity : board.getEntities()) {
-                if (entity instanceof Grass) {
-                    Coordinates grassPos = entity.getCoordinates();
-                    List<Coordinates> path = bfs.findPath(creaturePos, grassPos);
-                    if (path != null && path.size() < bestDistance) {
-                        bestDistance = path.size();
-                        nearest = grassPos;
-                    }
-                }
-            }
-        }
+        for (Entity entity : board.getEntities()) {
+            if (target.isInstance(entity)) {
+                Coordinates pos = entity.getCoordinates();
 
-        if (board.getEntity(creaturePos) instanceof Predator) {
-            for (Entity entity : board.getEntities()) {
-                if (entity instanceof Herbivore) {
-                    Coordinates grassPos = entity.getCoordinates();
-                    List<Coordinates> path = bfs.findPath(creaturePos, grassPos);
-                    if (path != null && path.size() < bestDistance) {
-                        bestDistance = path.size();
-                        nearest = grassPos;
-                    }
+                int dist = bestDistanceFinder(from, pos);
+
+                if (dist < bestDistance) {
+                    bestDistance = dist;
+                    nearest = pos;
                 }
             }
         }
 
         return nearest;
+    }
+
+    private static int bestDistanceFinder(Coordinates creaturePos, Coordinates predatorPos) {
+        int dist = Math.abs(creaturePos.getRow() - predatorPos.getRow())
+                + Math.abs(creaturePos.getCol() - predatorPos.getCol());
+        return dist;
     }
 }

@@ -1,3 +1,3 @@
-public interface Action {
+public interface Actionable {
     void execute(Board board);
 }

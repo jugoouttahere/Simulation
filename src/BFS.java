@@ -1,37 +1,39 @@
 import java.util.*;
 
 public class BFS {
-    private Board board;
+    private final Board board;
+    private final int[][] directions = {
+            {-1, 0}, {1, 0}, {0, -1}, {0, 1},
+            {1, 1}, {-1, -1}, {1, -1}, {-1, 1}
+    };
 
     public BFS(Board board) {
         this.board = board;
     }
 
-    public List<Coordinates> findPath(Coordinates start, Coordinates target) {
+    public Coordinates findNextStep(Coordinates start, Class<? extends Entity> targetEntity) {
         Queue<Coordinates> queue = new LinkedList<>();
         Set<Coordinates> visited = new HashSet<>();
         HashMap<Coordinates, Coordinates> parents = new HashMap<>();
-        List<Coordinates> path = new ArrayList<>();
 
         queue.add(start);
         visited.add(start);
 
         while (!queue.isEmpty()) {
             Coordinates current = queue.poll();
+            Entity entity = board.getEntity(current);
 
-            if (current.equals(target)) {
-                Coordinates next = target;
-                while (next != null) {
-                    path.add(next);
-                    next = parents.get(next);
+            if (targetEntity.isInstance(entity)) {
+                Coordinates nextStep = current;
+                while (parents.get(nextStep) != null && !parents.get(nextStep).equals(start)) {
+                    nextStep = parents.get(nextStep);
                 }
-                Collections.reverse(path);
-                return path;
+                return nextStep;
             }
 
             for (Coordinates neighbor : getNeighbors(current, board)) {
                 if (!visited.contains(neighbor) &&
-                        (board.isCellEmpty(neighbor) || neighbor.equals(target))) {
+                        (board.isCellEmpty(neighbor) || (board.getEntity(neighbor) != null && targetEntity.isInstance(board.getEntity(neighbor))))) {
                     visited.add(neighbor);
                     parents.put(neighbor, current);
                     queue.add(neighbor);
@@ -39,15 +41,11 @@ public class BFS {
             }
         }
 
-        return Collections.emptyList();
+        return null;
     }
 
     private Set<Coordinates> getNeighbors(Coordinates coordinates, Board board) {
         Set<Coordinates> neighbors = new HashSet<>();
-        int[][] directions = {
-                {-1, 0}, {1, 0}, {0, -1}, {0, 1},
-                {1, 1}, {-1, -1}, {1, -1}, {-1, 1}
-        };
 
         for (int i = 0; i < directions.length; i++) {
             int dirRow = directions[i][0];
@@ -61,7 +59,8 @@ public class BFS {
                 continue;
             }
 
-            if ((board.getEntity(newCoordinates) instanceof Rock) || (board.getEntity(newCoordinates) instanceof Tree)) {
+            Entity entity = board.getEntity(newCoordinates);
+            if (entity instanceof Rock || entity instanceof Tree) {
                 continue;
             }
 

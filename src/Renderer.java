@@ -1,5 +1,9 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Renderer {
     private final Board board;
+    private final Map<Class<? extends Entity>, String> spriteMap = new HashMap<>();
 
     private static final String EMPTY_CELL_SPRITE = "\u2B1B";
     private static final String HERBIVORE_SPRITE = "\uD83D\uDC07";
@@ -10,6 +14,11 @@ public class Renderer {
 
     public Renderer(Board board) {
         this.board = board;
+        spriteMap.put(Herbivore.class, HERBIVORE_SPRITE);
+        spriteMap.put(Predator.class, PREDATOR_SPRITE);
+        spriteMap.put(Grass.class, GRASS_SPRITE);
+        spriteMap.put(Tree.class, TREE_SPRITE);
+        spriteMap.put(Rock.class, ROCK_SPRITE);
     }
 
     public void render() {
@@ -29,18 +38,6 @@ public class Renderer {
 
     private String getSprite(Coordinates coordinates) {
         Entity entity = board.getEntity(coordinates);
-        switch (entity.getClass().getSimpleName()) {
-            case "Herbivore":
-                return HERBIVORE_SPRITE;
-            case "Predator":
-                return PREDATOR_SPRITE;
-            case "Grass":
-                return GRASS_SPRITE;
-            case "Tree":
-                return TREE_SPRITE;
-            case "Rock":
-                return ROCK_SPRITE;
-        }
-        return "";
+        return spriteMap.getOrDefault(entity.getClass(),"");
     }
 }

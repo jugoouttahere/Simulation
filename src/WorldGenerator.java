@@ -1,4 +1,4 @@
-public class WorldGenerator implements Action {
+public class WorldGenerator implements Actionable {
     private Board board;
     public final static int PREDATOR_COUNT = 1;
     public final static int HERBIVORE_COUNT = 5;

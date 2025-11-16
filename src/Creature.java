@@ -37,8 +37,8 @@ public abstract class Creature extends Entity {
     }
 
     public void move(Coordinates newCoordinates, Board board) {
-        board.getBoard().remove(this.getCoordinates());
+        board.removeEntity(this.getCoordinates());
         this.setCoordinates(newCoordinates);
-        board.getBoard().put(newCoordinates, this);
+        board.put(newCoordinates,this);
     }
 }
